@@ -1,15 +1,8 @@
-import OpenInNewIcon from "@mui/icons-material/OpenInNew";
-import {
-  Autocomplete,
-  IconButton,
-  ListItem,
-  ListItemButton,
-  ListItemText,
-  TextField,
-} from "@mui/material";
-import { useEffect, useState } from "react";
-import { ItemType, NotionItem } from "./types";
-import { fetchNotionItemsByType, getName } from "./utils/notion-utils";
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import { Autocomplete, IconButton, ListItem, ListItemButton, ListItemText, TextField } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { ItemType, NotionItem } from './types';
+import { fetchNotionItemsByType, getName } from './utils/notion-utils';
 
 interface ItemSelectorProps {
   setItem: (item: NotionItem) => void;
@@ -18,9 +11,7 @@ interface ItemSelectorProps {
 
 export default function ItemSelector(props: ItemSelectorProps) {
   const [notionItems, setNotionItems] = useState<NotionItem[]>([]);
-  const [selectedItem, setSelectedItem] = useState<NotionItem>(
-    {} as NotionItem
-  );
+  const [selectedItem, setSelectedItem] = useState<NotionItem>({} as NotionItem);
 
   useEffect(() => {
     const fetchItems = async () => {
@@ -47,7 +38,7 @@ export default function ItemSelector(props: ItemSelectorProps) {
         id="notion-item-combo-box"
         options={notionItems}
         isOptionEqualToValue={(option, value) => option.id === value.id}
-        getOptionLabel={(option) => getName(option) ?? ""}
+        getOptionLabel={option => getName(option) ?? ''}
         sx={{ width: 300 }}
         renderOption={(props, option) => (
           <ListItem {...props} key={option.id} disablePadding>
@@ -59,7 +50,7 @@ export default function ItemSelector(props: ItemSelectorProps) {
             </IconButton>
           </ListItem>
         )}
-        renderInput={(params) => (
+        renderInput={params => (
           <TextField
             {...params}
             fullWidth

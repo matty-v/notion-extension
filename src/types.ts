@@ -9,21 +9,21 @@ export interface ChromeMessage {
 }
 
 export enum NotionPropertyType {
-  title = "title",
-  multi_select = "multi_select",
-  date = "date",
-  select = "select",
-  rich_text = "rich_text",
-  status = "status",
-  url = "url",
-  number = "number",
-  last_edited_time = "last_edited_time",
-  created_time = "created_time",
+  title = 'title',
+  multi_select = 'multi_select',
+  date = 'date',
+  select = 'select',
+  rich_text = 'rich_text',
+  status = 'status',
+  url = 'url',
+  number = 'number',
+  last_edited_time = 'last_edited_time',
+  created_time = 'created_time',
 }
 
 export enum ItemType {
-  page = "page",
-  database = "database",
+  page = 'page',
+  database = 'database',
 }
 
 export type DbPage = {

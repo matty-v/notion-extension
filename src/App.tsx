@@ -1,6 +1,6 @@
-import "./App.css";
-import MainTabs from "./MainTabs";
-import TopBar from "./TopBar";
+import './App.css';
+import MainTabs from './MainTabs';
+import TopBar from './TopBar';
 
 function App() {
   return (

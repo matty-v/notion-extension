@@ -1,9 +1,9 @@
-import Box from "@mui/material/Box";
-import Tab from "@mui/material/Tab";
-import Tabs from "@mui/material/Tabs";
-import * as React from "react";
-import AddToDb from "./AddToDb";
-import AddToPage from "./AddToPage";
+import Box from '@mui/material/Box';
+import Tab from '@mui/material/Tab';
+import Tabs from '@mui/material/Tabs';
+import * as React from 'react';
+import AddToDb from './AddToDb';
+import AddToPage from './AddToPage';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -30,7 +30,7 @@ function TabPanel(props: TabPanelProps) {
 function a11yProps(index: number) {
   return {
     id: `main-tab-${index}`,
-    "aria-controls": `main-tabpanel-${index}`,
+    'aria-controls': `main-tabpanel-${index}`,
   };
 }
 
@@ -42,8 +42,8 @@ export default function MainTabs() {
   };
 
   return (
-    <Box sx={{ width: "100%" }}>
-      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+    <Box sx={{ width: '100%' }}>
+      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleChange} aria-label="main tabs">
           <Tab label="Add to DB" {...a11yProps(0)} />
           <Tab label="Add to Page" {...a11yProps(1)} />
