@@ -4,6 +4,7 @@ import Tabs from '@mui/material/Tabs';
 import * as React from 'react';
 import AddToDb from './AddToDb';
 import AddToPage from './AddToPage';
+import CreatePage from './CreatePage';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -47,7 +48,7 @@ export default function MainTabs() {
         <Tabs value={value} onChange={handleChange} aria-label="main tabs">
           <Tab label="Add to DB" {...a11yProps(0)} />
           <Tab label="Add to Page" {...a11yProps(1)} />
-          <Tab label="Quick Add" {...a11yProps(2)} />
+          <Tab label="Create Page" {...a11yProps(2)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
@@ -57,7 +58,7 @@ export default function MainTabs() {
         <AddToPage />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        Quick Add
+        <CreatePage />
       </TabPanel>
     </Box>
   );

@@ -22,6 +22,20 @@ export const createPageInDatabase = async (
   return await createNewPage({ database_id }, properties, pageContent);
 };
 
+export const createPageInParentPage = async (page_id: string, title: string, content: string): Promise<NotionPage> => {
+  const properties = {
+    title: [
+      {
+        text: {
+          content: title,
+        },
+      },
+    ],
+  };
+
+  return await createNewPage({ page_id }, properties, content);
+};
+
 export const createNewPage = async (parent: any, properties: any, pageContent: string): Promise<NotionPage> => {
   const children = [
     {
@@ -59,6 +73,48 @@ export const createNewPage = async (parent: any, properties: any, pageContent: s
     const response = await createNotionApiClient().post('pages', {
       parent,
       properties,
+      children,
+    });
+
+    console.log(JSON.stringify(response.data, null, 2));
+
+    return response.data;
+  }
+};
+
+export const addToPage = async (pageId: string, content: string): Promise<any> => {
+  const children = [
+    {
+      object: 'block',
+      type: 'paragraph',
+      paragraph: {
+        rich_text: [
+          {
+            type: 'text',
+            text: {
+              content,
+            },
+          },
+        ],
+      },
+    },
+  ];
+
+  if (process.env.REACT_APP_OFFLINE) {
+    console.log('Offline request');
+    console.log(
+      JSON.stringify(
+        {
+          children,
+        },
+        null,
+        2,
+      ),
+    );
+
+    return {};
+  } else {
+    const response = await createNotionApiClient().patch(`blocks/${pageId}/children`, {
       children,
     });
 
