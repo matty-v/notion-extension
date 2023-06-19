@@ -86,3 +86,9 @@ export type NotionSelectOption = {
   name: string;
   color: string;
 };
+
+export type NotificationPayload = {
+  Message: string;
+  LinkName?: string;
+  LinkUrl?: string;
+};

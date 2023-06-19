@@ -3,8 +3,9 @@ import { useState } from 'react';
 import AddContentForm from './AddContentForm';
 import ItemSelector from './ItemSelector';
 import { SELECTED_PAGE } from './consts';
-import { ItemType } from './types';
-import { addToPage, parseFromLocalStorage } from './utils/notion-utils';
+import { ItemType, NotificationPayload } from './types';
+import { Events, broadcast } from './utils/broadcaster';
+import { addToPage, getName, parseFromLocalStorage } from './utils/notion-utils';
 
 interface AddToPageProps {}
 
@@ -22,6 +23,12 @@ export default function AddToPage(props: AddToPageProps) {
     console.log(`Content to add: [${content}]`);
 
     await addToPage(selectedPage.id, content);
+    broadcast<NotificationPayload>(Events.Notify, {
+      Message: `Content successfully added to page => ${getName(selectedPage)}`,
+      LinkName: 'Link',
+      LinkUrl: selectedPage.url,
+    });
+    setContent('');
   };
 
   return (

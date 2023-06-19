@@ -1,5 +1,6 @@
 import './App.css';
 import MainTabs from './MainTabs';
+import Notification from './Notification';
 import TopBar from './TopBar';
 
 function App() {
@@ -7,6 +8,7 @@ function App() {
     <div className="App">
       <TopBar />
       <MainTabs />
+      <Notification />
     </div>
   );
 }

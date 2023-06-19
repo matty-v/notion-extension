@@ -4,7 +4,8 @@ import AddPageForm from './AddPageForm';
 import DbPropForm, { DbPropValue } from './DbPropForm';
 import ItemSelector from './ItemSelector';
 import { SELECTED_DB } from './consts';
-import { DbPage, ItemType, NotionPropertyType } from './types';
+import { DbPage, ItemType, NotificationPayload, NotionPropertyType } from './types';
+import { Events, broadcast } from './utils/broadcaster';
 import {
   createPageInDatabase,
   formatPropValues,
@@ -42,7 +43,15 @@ export default function AddToDb(props: AddToDbProps) {
 
     console.log(`DB Prop values: [${JSON.stringify(properties)}]`);
 
-    await createPageInDatabase(selectedDb.id, properties, newPage.content);
+    const createdPage = await createPageInDatabase(selectedDb.id, properties, newPage.content);
+
+    broadcast<NotificationPayload>(Events.Notify, {
+      Message: `Page successfully created => ${newPage.title}`,
+      LinkName: 'Link',
+      LinkUrl: createdPage.url,
+    });
+    setNewPage({ title: '', content: '' });
+    setDbPropValues([]);
   };
 
   const setPropValue = (propName: string, propValue: string, propType: NotionPropertyType) => {
