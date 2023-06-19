@@ -2,14 +2,20 @@ import { Button, Container } from '@mui/material';
 import { useState } from 'react';
 import AddContentForm from './AddContentForm';
 import ItemSelector from './ItemSelector';
+import { SELECTED_PAGE } from './consts';
 import { ItemType } from './types';
-import { addToPage } from './utils/notion-utils';
+import { addToPage, parseFromLocalStorage } from './utils/notion-utils';
 
 interface AddToPageProps {}
 
 export default function AddToPage(props: AddToPageProps) {
-  const [selectedPage, setSelectedPage] = useState<any>();
+  const [selectedPage, setSelectedPage] = useState<any>(parseFromLocalStorage(SELECTED_PAGE));
   const [content, setContent] = useState('');
+
+  const handleSelectPage = (selectedPage: any) => {
+    setSelectedPage(selectedPage);
+    localStorage.setItem(SELECTED_PAGE, JSON.stringify(selectedPage));
+  };
 
   const handleAddToPage = async () => {
     console.log(`Selected Page: [${JSON.stringify(selectedPage)}]`);
@@ -20,7 +26,7 @@ export default function AddToPage(props: AddToPageProps) {
 
   return (
     <Container>
-      <ItemSelector setItem={setSelectedPage} itemType={ItemType.page} />
+      <ItemSelector selectorType="page" item={selectedPage} setItem={handleSelectPage} itemType={ItemType.page} />
       <AddContentForm content={content} setContent={setContent} />
       <Button variant="contained" onClick={handleAddToPage} sx={{ mt: 1 }}>
         Add To Page

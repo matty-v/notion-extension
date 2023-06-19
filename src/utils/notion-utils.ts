@@ -236,6 +236,15 @@ export const formatPropValues = (
   return propertiesWithValues;
 };
 
+export const parseFromLocalStorage = (storageKey: string): any | null => {
+  const strData = localStorage.getItem(storageKey);
+  if (strData) {
+    return JSON.parse(strData);
+  } else {
+    return null;
+  }
+};
+
 const getPageName = (page: NotionPage): string => {
   let name = page.url;
 

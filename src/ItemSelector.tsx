@@ -1,23 +1,27 @@
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { Autocomplete, IconButton, ListItem, ListItemButton, ListItemText, TextField } from '@mui/material';
 import { useEffect, useState } from 'react';
+import { CACHED_ITEM } from './consts';
 import { ItemType, NotionItem } from './types';
-import { fetchNotionItemsByType, getName } from './utils/notion-utils';
+import { fetchNotionItemsByType, getName, parseFromLocalStorage } from './utils/notion-utils';
 
 interface ItemSelectorProps {
+  item: NotionItem;
   setItem: (item: NotionItem) => void;
   itemType: ItemType;
+  selectorType: string;
 }
 
 export default function ItemSelector(props: ItemSelectorProps) {
-  const [notionItems, setNotionItems] = useState<NotionItem[]>([]);
-  const [selectedItem, setSelectedItem] = useState<NotionItem>({} as NotionItem);
+  const [notionItems, setNotionItems] = useState<NotionItem[]>(
+    parseFromLocalStorage(`${CACHED_ITEM}-${props.itemType}`) ?? [],
+  );
 
   useEffect(() => {
     const fetchItems = async () => {
       const items = await fetchNotionItemsByType(props.itemType);
+      localStorage.setItem(`${CACHED_ITEM}-${props.itemType}`, JSON.stringify(items));
       setNotionItems(items);
-      setSelectedItem(items[0]);
     };
 
     fetchItems();
@@ -27,11 +31,10 @@ export default function ItemSelector(props: ItemSelectorProps) {
     <>
       <Autocomplete
         fullWidth
-        value={selectedItem}
+        value={props.item}
         onChange={(event, item) => {
           if (!item) return;
           console.log(`Selected Item: ${JSON.stringify(item)}`);
-          setSelectedItem(item);
           props.setItem(item);
         }}
         disablePortal
@@ -54,7 +57,7 @@ export default function ItemSelector(props: ItemSelectorProps) {
           <TextField
             {...params}
             fullWidth
-            label="Choose an item"
+            label={`Choose a ${props.selectorType}`}
             inputProps={{
               ...params.inputProps,
             }}

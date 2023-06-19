@@ -3,15 +3,27 @@ import { useState } from 'react';
 import AddPageForm from './AddPageForm';
 import DbPropForm, { DbPropValue } from './DbPropForm';
 import ItemSelector from './ItemSelector';
+import { SELECTED_DB } from './consts';
 import { DbPage, ItemType, NotionPropertyType } from './types';
-import { createPageInDatabase, formatPropValues, getName, getTitlePropFromDb } from './utils/notion-utils';
+import {
+  createPageInDatabase,
+  formatPropValues,
+  getName,
+  getTitlePropFromDb,
+  parseFromLocalStorage,
+} from './utils/notion-utils';
 
 interface AddToDbProps {}
 
 export default function AddToDb(props: AddToDbProps) {
-  const [selectedDb, setSelectedDb] = useState<any>();
+  const [selectedDb, setSelectedDb] = useState<any>(parseFromLocalStorage(SELECTED_DB));
   const [newPage, setNewPage] = useState<DbPage>({ title: '', content: '' });
   const [dbPropValues, setDbPropValues] = useState<DbPropValue[]>([]);
+
+  const handleSelectDb = (selectedDb: any) => {
+    setSelectedDb(selectedDb);
+    localStorage.setItem(SELECTED_DB, JSON.stringify(selectedDb));
+  };
 
   const handleCreatePage = async (): Promise<void> => {
     if (!selectedDb || !newPage) return;
@@ -51,7 +63,7 @@ export default function AddToDb(props: AddToDbProps) {
 
   return (
     <Container>
-      <ItemSelector setItem={setSelectedDb} itemType={ItemType.database} />
+      <ItemSelector selectorType="database" item={selectedDb} setItem={handleSelectDb} itemType={ItemType.database} />
       <AddPageForm setNewPage={setNewPage} newPage={newPage} />
       {selectedDb ? (
         <DbPropForm dbProps={selectedDb?.properties} propValues={dbPropValues} setPropValue={setPropValue} />
