@@ -52,6 +52,7 @@ export type NotionPage = {
   };
   properties: NotionProperties;
   url: string;
+  icon: IconProp | null;
 };
 
 export type NotionDatabase = {
@@ -63,6 +64,7 @@ export type NotionDatabase = {
   title?: NotionTitle[];
   properties: NotionProperties;
   url: string;
+  icon: IconProp | null;
 };
 
 export type NotionProperties = {
@@ -92,3 +94,16 @@ export type NotificationPayload = {
   LinkName?: string;
   LinkUrl?: string;
 };
+
+export type IconProp = {
+  type: IconType;
+  emoji?: string;
+  external?: {
+    url: string;
+  };
+};
+
+export enum IconType {
+  emoji = 'emoji',
+  external = 'external',
+}

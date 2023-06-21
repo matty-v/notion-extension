@@ -1,6 +1,7 @@
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
-import { Autocomplete, IconButton, ListItem, ListItemButton, ListItemText, TextField } from '@mui/material';
+import { Autocomplete, Box, IconButton, ListItem, ListItemAvatar, ListItemText, TextField } from '@mui/material';
 import { useEffect, useState } from 'react';
+import NotionIcon from './NotionIcon';
 import { CACHED_ITEM } from './consts';
 import { ItemType, NotionItem } from './types';
 import { fetchNotionItemsByType, getName, parseFromLocalStorage } from './utils/notion-utils';
@@ -45,23 +46,28 @@ export default function ItemSelector(props: ItemSelectorProps) {
         sx={{ width: 300 }}
         renderOption={(props, option) => (
           <ListItem {...props} key={option.id} disablePadding>
-            <ListItemButton>
-              <ListItemText primary={getName(option)} />
-            </ListItemButton>
+            <ListItemAvatar>
+              <NotionIcon iconProp={option.icon} />
+            </ListItemAvatar>
+            <ListItemText primary={getName(option)} />
             <IconButton href={option.url} target="_blank">
               <OpenInNewIcon />
             </IconButton>
           </ListItem>
         )}
         renderInput={params => (
-          <TextField
-            {...params}
-            fullWidth
-            label={`Choose a ${props.selectorType}`}
-            inputProps={{
-              ...params.inputProps,
-            }}
-          />
+          <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+            <NotionIcon iconProp={props.item.icon} />
+            <TextField
+              {...params}
+              fullWidth
+              label={`Selected ${props.itemType}`}
+              variant="standard"
+              inputProps={{
+                ...params.inputProps,
+              }}
+            />
+          </Box>
         )}
       />
     </>

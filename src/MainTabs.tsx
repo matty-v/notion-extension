@@ -1,10 +1,11 @@
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
-import * as React from 'react';
+import { useState } from 'react';
 import AddToDb from './AddToDb';
 import AddToPage from './AddToPage';
 import CreatePage from './CreatePage';
+import { CURRENT_TAB } from './consts';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -36,10 +37,11 @@ function a11yProps(index: number) {
 }
 
 export default function MainTabs() {
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(Number.parseInt(localStorage.getItem(CURRENT_TAB) ?? '0'));
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
+    localStorage.setItem(CURRENT_TAB, newValue.toString());
   };
 
   return (
