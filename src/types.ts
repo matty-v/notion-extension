@@ -1,3 +1,4 @@
+// Chrome Extension
 export enum Sender {
   React,
   Content,
@@ -8,6 +9,7 @@ export interface ChromeMessage {
   message: any;
 }
 
+// Notion Types
 export enum NotionPropertyType {
   title = 'title',
   multi_select = 'multi_select',
@@ -26,12 +28,52 @@ export enum ItemType {
   database = 'database',
 }
 
-export type DbPage = {
-  title: string;
-  content: string;
+export enum ParentType {
+  workspace = 'workspace',
+  page_id = 'page_id',
+  database_id = 'database_id',
+}
+
+export enum IconType {
+  emoji = 'emoji',
+  external = 'external',
+}
+
+type NotionObject = {
+  id: string;
+  created_time: string;
+  last_edited_time: string;
+  parent?: NotionDatabaseParent | NotionPageParent | NotionWorkspaceParent;
+  properties: NotionProperties;
+  url: string;
+  icon: IconProp | null;
 };
 
-export type NotionItem = NotionPage | NotionDatabase;
+export type NotionPageOrDatabaseObject = NotionObject & (NotionPageObject | NotionDatabaseObject);
+
+export type NotionPageObject = NotionObject & {
+  object: ItemType.page;
+};
+
+export type NotionDatabaseObject = NotionObject & {
+  object: ItemType.database;
+  title: NotionTitle[];
+};
+
+export type NotionDatabaseParent = {
+  type: ParentType.database_id;
+  database_id: string;
+};
+
+export type NotionPageParent = {
+  type: ParentType.page_id;
+  page_id: string;
+};
+
+export type NotionWorkspaceParent = {
+  type: ParentType.workspace;
+  workspace: boolean;
+};
 
 export type NotionTitle = {
   type: string;
@@ -39,32 +81,6 @@ export type NotionTitle = {
   annotations?: {};
   href?: any;
   plain_text: string;
-};
-
-export type NotionPage = {
-  object: ItemType.page;
-  id: string;
-  created_time: string;
-  last_edited_time: string;
-  parent?: {
-    type: string;
-    database_id?: string;
-  };
-  properties: NotionProperties;
-  url: string;
-  icon: IconProp | null;
-};
-
-export type NotionDatabase = {
-  object: ItemType.database;
-  id: string;
-  created_time: string;
-  last_edited_time: string;
-  archived: boolean;
-  title?: NotionTitle[];
-  properties: NotionProperties;
-  url: string;
-  icon: IconProp | null;
 };
 
 export type NotionProperties = {
@@ -75,12 +91,16 @@ export type NotionProp = {
   id: string;
   type: NotionPropertyType;
   name?: string;
-  title?: NotionTitle[] | {};
-  select?: NotionSelect;
 };
 
-export type NotionSelect = {
-  options: NotionSelectOption[];
+export type NotionSelectProp = NotionProp & {
+  select: {
+    options: NotionSelectOption[];
+  };
+};
+
+export type NotionTitleProp = NotionProp & {
+  title: NotionTitle[] | {};
 };
 
 export type NotionSelectOption = {
@@ -103,7 +123,8 @@ export type IconProp = {
   };
 };
 
-export enum IconType {
-  emoji = 'emoji',
-  external = 'external',
-}
+// My Types
+export type NewPage = {
+  title: string;
+  content: string;
+};

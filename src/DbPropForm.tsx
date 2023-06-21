@@ -1,8 +1,8 @@
 import { Box, Divider, Stack } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { ReactFragment, useEffect, useState } from 'react';
 import DbPropRichText from './DbPropRichText';
 import DbPropSelect from './DbPropSelect';
-import { NotionProperties, NotionPropertyType } from './types';
+import { NotionProperties, NotionPropertyType, NotionSelectProp } from './types';
 
 interface DbPropFormProps {
   dbProps: NotionProperties;
@@ -23,7 +23,7 @@ export interface DbPropTypeProps {
 }
 
 export default function DbPropForm(props: DbPropFormProps) {
-  const [propFragments, setPropFragments] = useState<any[]>([]);
+  const [propFragments, setPropFragments] = useState<ReactFragment[]>([]);
 
   useEffect(() => {
     const fragments: any[] = [];
@@ -33,11 +33,12 @@ export default function DbPropForm(props: DbPropFormProps) {
 
       switch (dbProp.type) {
         case NotionPropertyType.select:
+          const selectProp = dbProp as NotionSelectProp;
           fragments.push(
             <DbPropSelect
               propName={propName}
               setValue={value => props.setPropValue(propName, value, dbProp.type)}
-              selectOptions={dbProp.select?.options.map(option => option.name)}
+              selectOptions={selectProp.select.options.map(option => option.name)}
             />,
           );
           break;

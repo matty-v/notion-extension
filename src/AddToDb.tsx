@@ -4,7 +4,14 @@ import AddPageForm from './AddPageForm';
 import DbPropForm, { DbPropValue } from './DbPropForm';
 import ItemSelector from './ItemSelector';
 import { SELECTED_DB } from './consts';
-import { DbPage, ItemType, NotificationPayload, NotionPropertyType } from './types';
+import {
+  ItemType,
+  NewPage,
+  NotificationPayload,
+  NotionDatabaseObject,
+  NotionPageOrDatabaseObject,
+  NotionPropertyType,
+} from './types';
 import { Events, broadcast } from './utils/broadcaster';
 import {
   createPageInDatabase,
@@ -17,17 +24,21 @@ import {
 interface AddToDbProps {}
 
 export default function AddToDb(props: AddToDbProps) {
-  const [selectedDb, setSelectedDb] = useState<any>(parseFromLocalStorage(SELECTED_DB));
-  const [newPage, setNewPage] = useState<DbPage>({ title: '', content: '' });
+  const [selectedDb, setSelectedDb] = useState<NotionDatabaseObject>(parseFromLocalStorage(SELECTED_DB));
+  const [newPage, setNewPage] = useState<NewPage>({ title: '', content: '' });
   const [dbPropValues, setDbPropValues] = useState<DbPropValue[]>([]);
 
-  const handleSelectDb = (selectedDb: any) => {
-    setSelectedDb(selectedDb);
-    localStorage.setItem(SELECTED_DB, JSON.stringify(selectedDb));
+  const handleSelectDb = (selectedItem: NotionPageOrDatabaseObject) => {
+    const selectedDatabase = selectedItem as NotionDatabaseObject;
+    setSelectedDb(selectedDatabase);
+    localStorage.setItem(SELECTED_DB, JSON.stringify(selectedDatabase));
   };
 
   const handleCreatePage = async (): Promise<void> => {
     if (!selectedDb || !newPage) return;
+
+    broadcast<boolean>(Events.Loading, true);
+
     console.log(`Adding page to database [${getName(selectedDb)}]`);
     console.log(`Page title [${newPage.title}]`);
     console.log(`Page content [${newPage.content}]`);
@@ -46,12 +57,14 @@ export default function AddToDb(props: AddToDbProps) {
     const createdPage = await createPageInDatabase(selectedDb.id, properties, newPage.content);
 
     broadcast<NotificationPayload>(Events.Notify, {
-      Message: `Page successfully created => ${newPage.title}`,
+      Message: `Created [${newPage.title}]`,
       LinkName: 'Link',
       LinkUrl: createdPage.url,
     });
     setNewPage({ title: '', content: '' });
     setDbPropValues([]);
+
+    broadcast<boolean>(Events.Loading, false);
   };
 
   const setPropValue = (propName: string, propValue: string, propType: NotionPropertyType) => {

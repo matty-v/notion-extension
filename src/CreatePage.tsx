@@ -3,34 +3,42 @@ import { useState } from 'react';
 import AddPageForm from './AddPageForm';
 import ItemSelector from './ItemSelector';
 import { SELECTED_PARENT_PAGE } from './consts';
-import { DbPage, ItemType, NotificationPayload } from './types';
+import { ItemType, NewPage, NotificationPayload, NotionPageObject, NotionPageOrDatabaseObject } from './types';
 import { Events, broadcast } from './utils/broadcaster';
 import { createPageInParentPage, getName, parseFromLocalStorage } from './utils/notion-utils';
 
 interface CreatePageProps {}
 
 export default function CreatePage(props: CreatePageProps) {
-  const [selectedParentPage, setSelectedParentPage] = useState<any>(parseFromLocalStorage(SELECTED_PARENT_PAGE));
-  const [newPage, setNewPage] = useState<DbPage>({ title: '', content: '' });
+  const [selectedParentPage, setSelectedParentPage] = useState<NotionPageObject>(
+    parseFromLocalStorage(SELECTED_PARENT_PAGE),
+  );
+  const [newPage, setNewPage] = useState<NewPage>({ title: '', content: '' });
 
-  const handleSelectParentPage = (selectedParentPage: any) => {
-    setSelectedParentPage(selectedParentPage);
-    localStorage.setItem(SELECTED_PARENT_PAGE, JSON.stringify(selectedParentPage));
+  const handleSelectParentPage = (selectedItem: NotionPageOrDatabaseObject) => {
+    const page = selectedItem as NotionPageObject;
+    setSelectedParentPage(page);
+    localStorage.setItem(SELECTED_PARENT_PAGE, JSON.stringify(page));
   };
 
   const handleCreatePage = async (): Promise<void> => {
     if (!selectedParentPage || !newPage) return;
+
+    broadcast<boolean>(Events.Loading, true);
+
     console.log(`Adding page to parent [${getName(selectedParentPage)}]`);
     console.log(`Page title [${newPage.title}]`);
     console.log(`Page content [${newPage.content}]`);
 
     const createdPage = await createPageInParentPage(selectedParentPage.id, newPage.title, newPage.content);
     broadcast<NotificationPayload>(Events.Notify, {
-      Message: `Page successfuly created => ${newPage.title}`,
+      Message: `Created [${newPage.title}]`,
       LinkName: 'Link',
       LinkUrl: createdPage.url,
     });
     setNewPage({ title: '', content: '' });
+
+    broadcast<boolean>(Events.Loading, false);
   };
 
   return (

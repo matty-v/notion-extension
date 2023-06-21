@@ -2,6 +2,7 @@ import { filter, map, Observable, Subject } from 'rxjs';
 
 export enum Events {
   'Notify',
+  'Loading',
 }
 
 type BroadcastEvent = {

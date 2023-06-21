@@ -3,12 +3,13 @@ import { NOTION_TOKEN } from '../consts';
 import { TEST_NOTION_DATABASES, TEST_NOTION_PAGES } from '../test/test-data';
 import {
   ItemType,
-  NotionDatabase,
-  NotionItem,
-  NotionPage,
+  NotionDatabaseObject,
+  NotionPageObject,
+  NotionPageOrDatabaseObject,
   NotionProp,
   NotionPropertyType,
   NotionTitle,
+  NotionTitleProp,
 } from '../types';
 
 const notionApiUrl = 'https://api.notion.com/v1/';
@@ -18,11 +19,15 @@ export const createPageInDatabase = async (
   database_id: string,
   properties: any,
   pageContent: string,
-): Promise<NotionPage> => {
+): Promise<NotionPageObject> => {
   return await createNewPage({ database_id }, properties, pageContent);
 };
 
-export const createPageInParentPage = async (page_id: string, title: string, content: string): Promise<NotionPage> => {
+export const createPageInParentPage = async (
+  page_id: string,
+  title: string,
+  content: string,
+): Promise<NotionPageObject> => {
   const properties = {
     title: [
       {
@@ -36,7 +41,7 @@ export const createPageInParentPage = async (page_id: string, title: string, con
   return await createNewPage({ page_id }, properties, content);
 };
 
-export const createNewPage = async (parent: any, properties: any, pageContent: string): Promise<NotionPage> => {
+export const createNewPage = async (parent: any, properties: any, pageContent: string): Promise<NotionPageObject> => {
   const children = [
     {
       object: 'block',
@@ -67,8 +72,9 @@ export const createNewPage = async (parent: any, properties: any, pageContent: s
         2,
       ),
     );
+    await sleep(2);
 
-    return {} as NotionPage;
+    return {} as NotionPageObject;
   } else {
     const response = await createNotionApiClient().post('pages', {
       parent,
@@ -82,6 +88,7 @@ export const createNewPage = async (parent: any, properties: any, pageContent: s
   }
 };
 
+// TBD - Add Notion block to types
 export const addToPage = async (pageId: string, content: string): Promise<any> => {
   const children = [
     {
@@ -111,6 +118,7 @@ export const addToPage = async (pageId: string, content: string): Promise<any> =
         2,
       ),
     );
+    await sleep(2);
 
     return {};
   } else {
@@ -124,18 +132,18 @@ export const addToPage = async (pageId: string, content: string): Promise<any> =
   }
 };
 
-export const fetchTestDatabases = async (): Promise<NotionDatabase[]> => {
-  await new Promise(r => setTimeout(r, 2000));
+export const fetchTestDatabases = async (): Promise<NotionDatabaseObject[]> => {
+  await sleep(2);
   return Promise.resolve(TEST_NOTION_DATABASES);
 };
 
-export const fetchTestPages = async (): Promise<NotionPage[]> => {
-  await new Promise(r => setTimeout(r, 2000));
+export const fetchTestPages = async (): Promise<NotionPageObject[]> => {
+  await sleep(2);
   return Promise.resolve(TEST_NOTION_PAGES);
 };
 
-export const fetchNotionItemsByType = async (itemType: ItemType): Promise<NotionItem[]> => {
-  const items: NotionItem[] = [];
+export const fetchNotionItemsByType = async (itemType: ItemType): Promise<NotionPageOrDatabaseObject[]> => {
+  const items: NotionPageOrDatabaseObject[] = [];
 
   if (process.env.REACT_APP_OFFLINE) {
     switch (itemType) {
@@ -153,7 +161,7 @@ export const fetchNotionItemsByType = async (itemType: ItemType): Promise<Notion
   }
 };
 
-export const getName = (item: NotionItem): string => {
+export const getName = (item: NotionPageOrDatabaseObject): string => {
   if (!item) return '';
 
   let name = item.url;
@@ -172,12 +180,11 @@ export const getName = (item: NotionItem): string => {
   return name;
 };
 
-export const getTitlePropFromDb = (db: NotionDatabase): NotionProp | null => {
+export const getTitlePropFromDb = (db: NotionDatabaseObject): NotionProp | null => {
   let prop = null;
   Object.keys(db.properties).forEach(propName => {
     if (db.properties[propName].type === NotionPropertyType.title) {
       prop = db.properties[propName];
-      return;
     }
   });
   return prop;
@@ -245,22 +252,22 @@ export const parseFromLocalStorage = (storageKey: string): any | null => {
   }
 };
 
-const getPageName = (page: NotionPage): string => {
+const getPageName = (page: NotionPageObject): string => {
   let name = page.url;
 
   Object.keys(page.properties).forEach(propName => {
     const property = page.properties[propName];
     if (property.type === NotionPropertyType.title) {
-      const titleArray = property.title as NotionTitle[];
+      const titleProp = property as NotionTitleProp;
+      const titleArray = titleProp.title as NotionTitle[];
       name = titleArray.at(0)?.plain_text ?? page.url;
-      return;
     }
   });
 
   return name;
 };
 
-const getDatabaseName = (database: NotionDatabase): string => {
+const getDatabaseName = (database: NotionDatabaseObject): string => {
   return database.title?.at(0)?.plain_text ?? database.url;
 };
 
@@ -281,7 +288,7 @@ const getAuthHeader = (): { Authorization: string } => {
 const iterateResults = async (
   client: AxiosInstance,
   itemType: ItemType,
-  items: NotionItem[],
+  items: NotionPageOrDatabaseObject[],
   start_cursor: string = '',
 ) => {
   const sort = {
@@ -306,4 +313,8 @@ const iterateResults = async (
     console.log('fetching more results...');
     await iterateResults(client, itemType, items, response.data['next_cursor']);
   }
+};
+
+const sleep = async (seconds: number) => {
+  await new Promise(r => setTimeout(r, seconds * 1000));
 };

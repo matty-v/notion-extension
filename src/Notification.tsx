@@ -30,7 +30,7 @@ export default function Notification() {
 
   const action = (
     <>
-      <Button color="secondary" size="small" href={linkUrl} target="_blank">
+      <Button color="primary" size="small" href={linkUrl} target="_blank">
         {linkName}
       </Button>
       <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>

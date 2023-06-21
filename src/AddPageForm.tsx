@@ -1,10 +1,10 @@
 import { TextField } from '@mui/material';
 import AddContentForm from './AddContentForm';
-import { DbPage } from './types';
+import { NewPage } from './types';
 
 interface AddPageFormProps {
-  setNewPage: (newPage: DbPage) => void;
-  newPage: DbPage;
+  setNewPage: (newPage: NewPage) => void;
+  newPage: NewPage;
 }
 
 export default function AddPageForm(props: AddPageFormProps) {

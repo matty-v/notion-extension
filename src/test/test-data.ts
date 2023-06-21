@@ -1,6 +1,6 @@
-import { NotionDatabase, NotionPage } from '../types';
+import { NotionDatabaseObject, NotionPageObject } from '../types';
 
-export const TEST_NOTION_PAGES: NotionPage[] = [
+export const TEST_NOTION_PAGES: NotionPageObject[] = [
   {
     object: 'page',
     id: 'eb8d08ed-8d17-4918-92c9-ceabf17267d6',
@@ -53,7 +53,7 @@ export const TEST_NOTION_PAGES: NotionPage[] = [
     },
     url: 'https://www.notion.so/Notion-API-Exploration-eb8d08ed8d17491892c9ceabf17267d6',
     public_url: null,
-  } as NotionPage,
+  } as NotionPageObject,
   {
     object: 'page',
     id: '0f10a765-a420-4620-ad04-e584dc00405c',
@@ -115,7 +115,7 @@ export const TEST_NOTION_PAGES: NotionPage[] = [
     },
     url: 'https://www.notion.so/Create-git-repo-for-project-0f10a765a4204620ad04e584dc00405c',
     public_url: null,
-  } as NotionPage,
+  } as NotionPageObject,
   {
     object: 'page',
     id: '553dfaba-e806-4405-897f-03139d17240f',
@@ -177,7 +177,7 @@ export const TEST_NOTION_PAGES: NotionPage[] = [
     },
     url: 'https://www.notion.so/DB-Prop-Text-field-553dfabae8064405897f03139d17240f',
     public_url: null,
-  } as NotionPage,
+  } as NotionPageObject,
   {
     object: 'page',
     id: '6ce5b4e1-66b7-420d-b197-fe1148dfe083',
@@ -239,7 +239,7 @@ export const TEST_NOTION_PAGES: NotionPage[] = [
     },
     url: 'https://www.notion.so/DB-Prop-Single-Select-6ce5b4e166b7420db197fe1148dfe083',
     public_url: null,
-  } as NotionPage,
+  } as NotionPageObject,
   {
     object: 'page',
     id: '1000833f-71e4-45bf-b632-cefffdf6454e',
@@ -297,7 +297,7 @@ export const TEST_NOTION_PAGES: NotionPage[] = [
     },
     url: 'https://www.notion.so/Dashboard-1000833f71e445bfb632cefffdf6454e',
     public_url: null,
-  } as NotionPage,
+  } as NotionPageObject,
   {
     object: 'page',
     id: 'd1c02075-7379-4c1e-bd8a-334d56b85009',
@@ -348,7 +348,7 @@ export const TEST_NOTION_PAGES: NotionPage[] = [
     },
     url: 'https://www.notion.so/Quick-Notes-d1c0207573794c1ebd8a334d56b85009',
     public_url: null,
-  } as NotionPage,
+  } as NotionPageObject,
   {
     object: 'page',
     id: 'ae949d8f-3324-4efd-8762-d03ff64dc617',
@@ -440,7 +440,7 @@ export const TEST_NOTION_PAGES: NotionPage[] = [
     },
     url: 'https://www.notion.so/Test-DB-Page-ae949d8f33244efd8762d03ff64dc617',
     public_url: null,
-  } as NotionPage,
+  } as NotionPageObject,
   {
     object: 'page',
     id: '09e7f910-b63a-4a84-acb6-0d57ac9675a2',
@@ -488,10 +488,10 @@ export const TEST_NOTION_PAGES: NotionPage[] = [
     },
     url: 'https://www.notion.so/Test-Page-09e7f910b63a4a84acb60d57ac9675a2',
     public_url: null,
-  } as NotionPage,
+  } as NotionPageObject,
 ];
 
-export const TEST_NOTION_DATABASES: NotionDatabase[] = [
+export const TEST_NOTION_DATABASES: NotionDatabaseObject[] = [
   {
     object: 'database',
     id: 'cb3ab4e6-6a2a-4b2d-9ca5-fba3b19fa526',
@@ -767,7 +767,7 @@ export const TEST_NOTION_DATABASES: NotionDatabase[] = [
     url: 'https://www.notion.so/cb3ab4e66a2a4b2d9ca5fba3b19fa526',
     public_url: null,
     archived: false,
-  } as NotionDatabase,
+  } as NotionDatabaseObject,
   {
     object: 'database',
     id: '1d4ecd1b-bfcc-40de-822e-a4f59242a6c8',
@@ -839,7 +839,7 @@ export const TEST_NOTION_DATABASES: NotionDatabase[] = [
     url: 'https://www.notion.so/1d4ecd1bbfcc40de822ea4f59242a6c8',
     public_url: null,
     archived: false,
-  } as NotionDatabase,
+  } as NotionDatabaseObject,
   {
     object: 'database',
     id: '3cc214ef-3342-4e99-9ab0-c8b394bb9299',
@@ -943,7 +943,7 @@ export const TEST_NOTION_DATABASES: NotionDatabase[] = [
     url: 'https://www.notion.so/3cc214ef33424e999ab0c8b394bb9299',
     public_url: null,
     archived: false,
-  } as NotionDatabase,
+  } as NotionDatabaseObject,
   {
     object: 'database',
     id: '969f79cf-2f17-4f37-a5d6-d675d0d09767',
@@ -1130,7 +1130,7 @@ export const TEST_NOTION_DATABASES: NotionDatabase[] = [
     url: 'https://www.notion.so/969f79cf2f174f37a5d6d675d0d09767',
     public_url: null,
     archived: false,
-  } as NotionDatabase,
+  } as NotionDatabaseObject,
   {
     object: 'database',
     id: 'b1675c66-38f0-402c-808c-2df47675cd7b',
@@ -1190,7 +1190,7 @@ export const TEST_NOTION_DATABASES: NotionDatabase[] = [
     url: 'https://www.notion.so/b1675c6638f0402c808c2df47675cd7b',
     public_url: null,
     archived: false,
-  } as NotionDatabase,
+  } as NotionDatabaseObject,
   {
     object: 'database',
     id: 'c671ee7a-76ca-47a5-9755-de5f61ea8bcb',
@@ -1360,5 +1360,5 @@ export const TEST_NOTION_DATABASES: NotionDatabase[] = [
     url: 'https://www.notion.so/c671ee7a76ca47a59755de5f61ea8bcb',
     public_url: null,
     archived: false,
-  } as NotionDatabase,
+  } as NotionDatabaseObject,
 ];

@@ -3,18 +3,18 @@ import { Autocomplete, Box, IconButton, ListItem, ListItemAvatar, ListItemText, 
 import { useEffect, useState } from 'react';
 import NotionIcon from './NotionIcon';
 import { CACHED_ITEM } from './consts';
-import { ItemType, NotionItem } from './types';
+import { ItemType, NotionPageOrDatabaseObject } from './types';
 import { fetchNotionItemsByType, getName, parseFromLocalStorage } from './utils/notion-utils';
 
 interface ItemSelectorProps {
-  item: NotionItem;
-  setItem: (item: NotionItem) => void;
+  item: NotionPageOrDatabaseObject;
+  setItem: (item: NotionPageOrDatabaseObject) => void;
   itemType: ItemType;
   selectorType: string;
 }
 
 export default function ItemSelector(props: ItemSelectorProps) {
-  const [notionItems, setNotionItems] = useState<NotionItem[]>(
+  const [notionItems, setNotionItems] = useState<NotionPageOrDatabaseObject[]>(
     parseFromLocalStorage(`${CACHED_ITEM}-${props.itemType}`) ?? [],
   );
 
