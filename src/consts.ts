@@ -4,3 +4,5 @@ export const SELECTED_PAGE: string = 'notion-selected-page';
 export const SELECTED_PARENT_PAGE: string = 'notion-selected-parent-page';
 export const CACHED_ITEM: string = 'notion-cache';
 export const CURRENT_TAB: string = 'notion-current-tab';
+
+export const OPENAI_TOKEN: string = 'openai-token';

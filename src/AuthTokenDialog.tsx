@@ -1,6 +1,6 @@
 import { Button, Dialog, DialogContent, DialogTitle, TextField } from '@mui/material';
 import { useState } from 'react';
-import { NOTION_TOKEN } from './consts';
+import { NOTION_TOKEN, OPENAI_TOKEN } from './consts';
 
 interface AuthTokenDialogProps {
   open: boolean;
@@ -8,10 +8,12 @@ interface AuthTokenDialogProps {
 }
 
 export default function AuthTokenDialog(props: AuthTokenDialogProps) {
-  const [authToken, setAuthToken] = useState(localStorage.getItem(NOTION_TOKEN) ?? '');
+  const [notionAuthToken, setNotionAuthToken] = useState(localStorage.getItem(NOTION_TOKEN) ?? '');
+  const [openAiAuthToken, setOpenAiAuthToken] = useState(localStorage.getItem(OPENAI_TOKEN) ?? '');
 
-  const handleSaveToken = () => {
-    localStorage.setItem(NOTION_TOKEN, authToken);
+  const handleSaveTokens = () => {
+    localStorage.setItem(NOTION_TOKEN, notionAuthToken);
+    localStorage.setItem(OPENAI_TOKEN, openAiAuthToken);
     handleClose();
   };
 
@@ -21,16 +23,23 @@ export default function AuthTokenDialog(props: AuthTokenDialogProps) {
 
   return (
     <Dialog maxWidth={'md'} open={props.open} onClose={handleClose}>
-      <DialogTitle>Auth Token</DialogTitle>
+      <DialogTitle>Auth Tokens</DialogTitle>
       <DialogContent>
         <TextField
           sx={{ mt: 1 }}
           fullWidth
-          label="Auth Token"
-          value={authToken}
-          onChange={event => setAuthToken(event.target.value)}
+          label="Notion Auth Token"
+          value={notionAuthToken}
+          onChange={event => setNotionAuthToken(event.target.value)}
         />
-        <Button sx={{ textAlign: 'center', m: 2 }} variant="contained" onClick={handleSaveToken}>
+        <TextField
+          sx={{ mt: 1 }}
+          fullWidth
+          label="OpenAI Auth Token"
+          value={openAiAuthToken}
+          onChange={event => setOpenAiAuthToken(event.target.value)}
+        />
+        <Button sx={{ textAlign: 'center', m: 2 }} variant="contained" onClick={handleSaveTokens}>
           Save
         </Button>
       </DialogContent>

@@ -49,7 +49,7 @@ export default function TopBar() {
             handleMenuClose();
           }}
         >
-          Auth Token
+          Auth Tokens
         </MenuItem>
       </Menu>
       <AuthTokenDialog open={authDialogOpen} setOpen={setAuthDialogOpen} />
