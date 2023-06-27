@@ -1,4 +1,4 @@
-import { NotionDatabaseObject, NotionPageObject } from '../types';
+import { NotionDatabaseObject, NotionPageObject } from '../utils/types';
 
 export const TEST_NOTION_PAGES: NotionPageObject[] = [
   {

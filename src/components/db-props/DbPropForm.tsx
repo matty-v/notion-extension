@@ -1,12 +1,12 @@
 import { Box, Divider, Stack } from '@mui/material';
 import { ReactFragment, useEffect, useState } from 'react';
+import { NotionProperties, NotionPropertyType, NotionSelectProp } from '../../utils/types';
+import DbPropDate from './DbPropDate';
 import DbPropRichText from './DbPropRichText';
 import DbPropSelect from './DbPropSelect';
-import { NotionProperties, NotionPropertyType, NotionSelectProp } from './types';
 
 interface DbPropFormProps {
   dbProps: NotionProperties;
-  propValues: DbPropValue[];
   setPropValue: (propName: string, propValue: string, propType: NotionPropertyType) => void;
 }
 
@@ -23,13 +23,14 @@ export interface DbPropTypeProps {
 }
 
 export default function DbPropForm(props: DbPropFormProps) {
+  const { dbProps, setPropValue } = props;
   const [propFragments, setPropFragments] = useState<ReactFragment[]>([]);
 
   useEffect(() => {
     const fragments: any[] = [];
 
-    Object.keys(props.dbProps).forEach(propName => {
-      const dbProp = props.dbProps[propName];
+    Object.keys(dbProps).forEach(propName => {
+      const dbProp = dbProps[propName];
 
       switch (dbProp.type) {
         case NotionPropertyType.select:
@@ -37,24 +38,28 @@ export default function DbPropForm(props: DbPropFormProps) {
           fragments.push(
             <DbPropSelect
               propName={propName}
-              setValue={value => props.setPropValue(propName, value, dbProp.type)}
+              setValue={value => setPropValue(propName, value, dbProp.type)}
               selectOptions={selectProp.select.options.map(option => option.name)}
             />,
           );
           break;
         case NotionPropertyType.rich_text:
           fragments.push(
-            <DbPropRichText propName={propName} setValue={value => props.setPropValue(propName, value, dbProp.type)} />,
+            <DbPropRichText propName={propName} setValue={value => setPropValue(propName, value, dbProp.type)} />,
           );
           break;
-
+        case NotionPropertyType.date:
+          fragments.push(
+            <DbPropDate propName={propName} setValue={value => setPropValue(propName, value, dbProp.type)} />,
+          );
+          break;
         default:
           break;
       }
     });
 
     setPropFragments(fragments);
-  }, [props, props.dbProps, props.setPropValue]);
+  }, [dbProps, setPropValue]);
 
   return (
     <Stack

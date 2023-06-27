@@ -1,5 +1,5 @@
 import { Avatar } from '@mui/material';
-import { IconProp, IconType } from './types';
+import { IconProp, IconType } from '../utils/types';
 
 interface NotionIconProps {
   iconProp: IconProp | null;

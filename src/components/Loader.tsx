@@ -1,6 +1,6 @@
 import { Backdrop, CircularProgress } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { Events, on } from './utils/broadcaster';
+import { Events, on } from '../utils/broadcaster';
 
 interface LoaderProps {}
 

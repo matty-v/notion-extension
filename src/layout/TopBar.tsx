@@ -6,7 +6,7 @@ import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { useState } from 'react';
-import AuthTokenDialog from './AuthTokenDialog';
+import AuthTokenDialog from '../components/AuthTokenDialog';
 
 export default function TopBar() {
   const [authDialogOpen, setAuthDialogOpen] = useState(false);

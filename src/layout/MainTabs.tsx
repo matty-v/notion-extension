@@ -2,10 +2,10 @@ import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import { useState } from 'react';
+import { CURRENT_TAB } from '../utils/consts';
 import AddToDb from './AddToDb';
 import AddToPage from './AddToPage';
 import CreatePage from './CreatePage';
-import { CURRENT_TAB } from './consts';
 
 interface TabPanelProps {
   children?: React.ReactNode;

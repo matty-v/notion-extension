@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
-import { OPENAI_TOKEN } from '../consts';
+import { OPENAI_TOKEN } from './consts';
 
 const openAiApiUrl = 'https://api.openai.com/v1/';
 const model = 'gpt-3.5-turbo';

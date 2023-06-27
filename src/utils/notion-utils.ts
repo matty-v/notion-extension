@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from 'axios';
-import { NOTION_TOKEN } from '../consts';
 import { TEST_NOTION_DATABASES, TEST_NOTION_PAGES } from '../test/test-data';
+import { NOTION_TOKEN } from './consts';
 import {
   ItemType,
   NotionDatabaseObject,
@@ -10,7 +10,7 @@ import {
   NotionPropertyType,
   NotionTitle,
   NotionTitleProp,
-} from '../types';
+} from './types';
 
 const notionApiUrl = 'https://api.notion.com/v1/';
 const notionVersion = '2022-06-28';
@@ -231,6 +231,17 @@ export const formatPropValues = (
               },
             },
           ],
+        };
+
+        break;
+
+      case NotionPropertyType.date:
+        propertiesWithValues[prop.propName] = {
+          date: {
+            start: prop.propValue,
+            end: null,
+            time_zone: null,
+          },
         };
 
         break;

@@ -1,4 +1,4 @@
-import { ChromeMessage, Sender } from '../types';
+import { ChromeMessage, Sender } from '../utils/types';
 
 type MessageResponse = (response?: any) => void;
 

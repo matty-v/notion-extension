@@ -1,9 +1,17 @@
 import { Button, Container } from '@mui/material';
 import { useState } from 'react';
-import AddPageForm from './AddPageForm';
-import DbPropForm, { DbPropValue } from './DbPropForm';
-import ItemSelector from './ItemSelector';
-import { SELECTED_DB } from './consts';
+import AddPageForm from '../components/AddPageForm';
+import ItemSelector from '../components/ItemSelector';
+import DbPropForm, { DbPropValue } from '../components/db-props/DbPropForm';
+import { Events, broadcast } from '../utils/broadcaster';
+import { SELECTED_DB } from '../utils/consts';
+import {
+  createPageInDatabase,
+  formatPropValues,
+  getName,
+  getTitlePropFromDb,
+  parseFromLocalStorage,
+} from '../utils/notion-utils';
 import {
   ItemType,
   NewPage,
@@ -11,15 +19,7 @@ import {
   NotionDatabaseObject,
   NotionPageOrDatabaseObject,
   NotionPropertyType,
-} from './types';
-import { Events, broadcast } from './utils/broadcaster';
-import {
-  createPageInDatabase,
-  formatPropValues,
-  getName,
-  getTitlePropFromDb,
-  parseFromLocalStorage,
-} from './utils/notion-utils';
+} from '../utils/types';
 
 interface AddToDbProps {}
 
@@ -63,6 +63,7 @@ export default function AddToDb(props: AddToDbProps) {
     });
     setNewPage({ title: '', content: '' });
     setDbPropValues([]);
+    broadcast<boolean>(Events.ResetForm, true);
 
     broadcast<boolean>(Events.Loading, false);
   };
@@ -87,11 +88,7 @@ export default function AddToDb(props: AddToDbProps) {
     <Container>
       <ItemSelector selectorType="database" item={selectedDb} setItem={handleSelectDb} itemType={ItemType.database} />
       <AddPageForm setNewPage={setNewPage} newPage={newPage} />
-      {selectedDb ? (
-        <DbPropForm dbProps={selectedDb?.properties} propValues={dbPropValues} setPropValue={setPropValue} />
-      ) : (
-        <></>
-      )}
+      {selectedDb ? <DbPropForm dbProps={selectedDb?.properties} setPropValue={setPropValue} /> : <></>}
       <Button variant="contained" onClick={handleCreatePage} sx={{ mt: 1 }}>
         Create Database Page
       </Button>

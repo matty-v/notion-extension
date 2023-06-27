@@ -1,10 +1,10 @@
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { Autocomplete, Box, IconButton, ListItem, ListItemAvatar, ListItemText, TextField } from '@mui/material';
 import { useEffect, useState } from 'react';
+import { CACHED_ITEM } from '../utils/consts';
+import { fetchNotionItemsByType, getName, parseFromLocalStorage } from '../utils/notion-utils';
+import { ItemType, NotionPageOrDatabaseObject } from '../utils/types';
 import NotionIcon from './NotionIcon';
-import { CACHED_ITEM } from './consts';
-import { ItemType, NotionPageOrDatabaseObject } from './types';
-import { fetchNotionItemsByType, getName, parseFromLocalStorage } from './utils/notion-utils';
 
 interface ItemSelectorProps {
   item: NotionPageOrDatabaseObject;
@@ -57,7 +57,7 @@ export default function ItemSelector(props: ItemSelectorProps) {
         )}
         renderInput={params => (
           <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
-            <NotionIcon iconProp={props.item.icon} />
+            <NotionIcon iconProp={props.item?.icon} />
             <TextField
               {...params}
               fullWidth

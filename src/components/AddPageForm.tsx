@@ -1,6 +1,6 @@
 import { TextField } from '@mui/material';
+import { NewPage } from '../utils/types';
 import AddContentForm from './AddContentForm';
-import { NewPage } from './types';
 
 interface AddPageFormProps {
   setNewPage: (newPage: NewPage) => void;

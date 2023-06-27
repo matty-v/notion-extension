@@ -11,8 +11,8 @@ import {
   TextField,
 } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { Events, broadcast } from './utils/broadcaster';
-import { AiPrompts, generateChatCompletion } from './utils/openai-utils';
+import { Events, broadcast } from '../utils/broadcaster';
+import { AiPrompts, generateChatCompletion } from '../utils/openai-utils';
 
 interface AiContextDialogProps {
   open: boolean;

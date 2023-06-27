@@ -1,8 +1,7 @@
 import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
-import './App.css';
-import Loader from './Loader';
+import Loader from '../components/Loader';
+import Notification from '../components/Notification';
 import MainTabs from './MainTabs';
-import Notification from './Notification';
 import TopBar from './TopBar';
 
 const darkTheme = createTheme({

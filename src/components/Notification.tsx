@@ -2,8 +2,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import { Button, IconButton } from '@mui/material';
 import Snackbar from '@mui/material/Snackbar';
 import React, { useEffect, useState } from 'react';
-import { NotificationPayload } from './types';
-import { Events, on } from './utils/broadcaster';
+import { Events, on } from '../utils/broadcaster';
+import { NotificationPayload } from '../utils/types';
 
 export default function Notification() {
   const [open, setOpen] = useState(false);

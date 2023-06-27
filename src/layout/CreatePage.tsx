@@ -1,11 +1,11 @@
 import { Button, Container } from '@mui/material';
 import { useState } from 'react';
-import AddPageForm from './AddPageForm';
-import ItemSelector from './ItemSelector';
-import { SELECTED_PARENT_PAGE } from './consts';
-import { ItemType, NewPage, NotificationPayload, NotionPageObject, NotionPageOrDatabaseObject } from './types';
-import { Events, broadcast } from './utils/broadcaster';
-import { createPageInParentPage, getName, parseFromLocalStorage } from './utils/notion-utils';
+import AddPageForm from '../components/AddPageForm';
+import ItemSelector from '../components/ItemSelector';
+import { Events, broadcast } from '../utils/broadcaster';
+import { SELECTED_PARENT_PAGE } from '../utils/consts';
+import { createPageInParentPage, getName, parseFromLocalStorage } from '../utils/notion-utils';
+import { ItemType, NewPage, NotificationPayload, NotionPageObject, NotionPageOrDatabaseObject } from '../utils/types';
 
 interface CreatePageProps {}
 

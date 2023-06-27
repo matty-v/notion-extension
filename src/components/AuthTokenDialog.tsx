@@ -1,6 +1,6 @@
 import { Button, Dialog, DialogContent, DialogTitle, TextField } from '@mui/material';
 import { useState } from 'react';
-import { NOTION_TOKEN, OPENAI_TOKEN } from './consts';
+import { NOTION_TOKEN, OPENAI_TOKEN } from '../utils/consts';
 
 interface AuthTokenDialogProps {
   open: boolean;
