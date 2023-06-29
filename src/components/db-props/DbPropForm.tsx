@@ -1,9 +1,12 @@
 import { Box, Divider, Stack } from '@mui/material';
 import { ReactFragment, useEffect, useState } from 'react';
-import { NotionProperties, NotionPropertyType, NotionSelectProp } from '../../utils/types';
+import { NotionMultiSelectProp, NotionProperties, NotionPropertyType, NotionSelectProp } from '../../utils/types';
 import DbPropDate from './DbPropDate';
+import DbPropMultiSelect from './DbPropMultiSelect';
+import DbPropNumber from './DbPropNumber';
 import DbPropRichText from './DbPropRichText';
 import DbPropSelect from './DbPropSelect';
+import DbPropUrl from './DbPropUrl';
 
 interface DbPropFormProps {
   dbProps: NotionProperties;
@@ -43,9 +46,29 @@ export default function DbPropForm(props: DbPropFormProps) {
             />,
           );
           break;
+        case NotionPropertyType.multi_select:
+          const multiSelectProp = dbProp as NotionMultiSelectProp;
+          fragments.push(
+            <DbPropMultiSelect
+              propName={propName}
+              setValue={value => setPropValue(propName, value, dbProp.type)}
+              selectOptions={multiSelectProp.multi_select.options.map(option => option.name)}
+            />,
+          );
+          break;
         case NotionPropertyType.rich_text:
           fragments.push(
             <DbPropRichText propName={propName} setValue={value => setPropValue(propName, value, dbProp.type)} />,
+          );
+          break;
+        case NotionPropertyType.number:
+          fragments.push(
+            <DbPropNumber propName={propName} setValue={value => setPropValue(propName, value, dbProp.type)} />,
+          );
+          break;
+        case NotionPropertyType.url:
+          fragments.push(
+            <DbPropUrl propName={propName} setValue={value => setPropValue(propName, value, dbProp.type)} />,
           );
           break;
         case NotionPropertyType.date:

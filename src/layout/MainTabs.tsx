@@ -47,7 +47,7 @@ export default function MainTabs() {
   return (
     <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={value} onChange={handleChange} aria-label="main tabs">
+        <Tabs value={value} onChange={handleChange} aria-label="main tabs" variant="fullWidth">
           <Tab label="Add to DB" {...a11yProps(0)} />
           <Tab label="Add to Page" {...a11yProps(1)} />
           <Tab label="Create Page" {...a11yProps(2)} />

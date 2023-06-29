@@ -99,6 +99,12 @@ export type NotionSelectProp = NotionProp & {
   };
 };
 
+export type NotionMultiSelectProp = NotionProp & {
+  multi_select: {
+    options: NotionSelectOption[];
+  };
+};
+
 export type NotionTitleProp = NotionProp & {
   title: NotionTitle[] | {};
 };

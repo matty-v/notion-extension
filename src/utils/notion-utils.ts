@@ -222,6 +222,14 @@ export const formatPropValues = (
 
         break;
 
+      case NotionPropertyType.multi_select:
+        propertiesWithValues[prop.propName] = {
+          multi_select: prop.propValue.split(',').map(v => {
+            return { name: v };
+          }),
+        };
+
+        break;
       case NotionPropertyType.rich_text:
         propertiesWithValues[prop.propName] = {
           rich_text: [
@@ -231,6 +239,20 @@ export const formatPropValues = (
               },
             },
           ],
+        };
+
+        break;
+
+      case NotionPropertyType.url:
+        propertiesWithValues[prop.propName] = {
+          url: prop.propValue,
+        };
+
+        break;
+
+      case NotionPropertyType.number:
+        propertiesWithValues[prop.propName] = {
+          number: Number.parseInt(prop.propValue),
         };
 
         break;
