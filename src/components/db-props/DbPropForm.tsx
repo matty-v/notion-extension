@@ -1,6 +1,13 @@
 import { Box, Divider, Stack } from '@mui/material';
 import { ReactFragment, useEffect, useState } from 'react';
-import { NotionMultiSelectProp, NotionProperties, NotionPropertyType, NotionSelectProp } from '../../utils/types';
+import {
+  NotionMultiSelectProp,
+  NotionProperties,
+  NotionPropertyType,
+  NotionSelectProp,
+  NotionStatusProp,
+} from '../../utils/types';
+import DbPropCheckbox from './DbPropCheckbox';
 import DbPropDate from './DbPropDate';
 import DbPropMultiSelect from './DbPropMultiSelect';
 import DbPropNumber from './DbPropNumber';
@@ -36,6 +43,16 @@ export default function DbPropForm(props: DbPropFormProps) {
       const dbProp = dbProps[propName];
 
       switch (dbProp.type) {
+        case NotionPropertyType.status:
+          const statusProp = dbProp as NotionStatusProp;
+          fragments.push(
+            <DbPropSelect
+              propName={propName}
+              setValue={value => setPropValue(propName, value, dbProp.type)}
+              selectOptions={statusProp.status.options.map(option => option.name)}
+            />,
+          );
+          break;
         case NotionPropertyType.select:
           const selectProp = dbProp as NotionSelectProp;
           fragments.push(
@@ -74,6 +91,11 @@ export default function DbPropForm(props: DbPropFormProps) {
         case NotionPropertyType.date:
           fragments.push(
             <DbPropDate propName={propName} setValue={value => setPropValue(propName, value, dbProp.type)} />,
+          );
+          break;
+        case NotionPropertyType.checkbox:
+          fragments.push(
+            <DbPropCheckbox propName={propName} setValue={value => setPropValue(propName, value, dbProp.type)} />,
           );
           break;
         default:

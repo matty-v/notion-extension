@@ -21,6 +21,10 @@ export enum NotionPropertyType {
   number = 'number',
   last_edited_time = 'last_edited_time',
   created_time = 'created_time',
+  checkbox = 'checkbox',
+  phone_number = 'phone_number',
+  people = 'people',
+  files = 'files',
 }
 
 export enum ItemType {
@@ -93,6 +97,12 @@ export type NotionProp = {
   name?: string;
 };
 
+export type NotionStatusProp = NotionProp & {
+  status: {
+    options: NotionSelectOption[];
+  };
+};
+
 export type NotionSelectProp = NotionProp & {
   select: {
     options: NotionSelectOption[];
@@ -128,6 +138,28 @@ export type IconProp = {
     url: string;
   };
 };
+
+export type NotionBlock = {
+  object: 'block';
+  type: BlockType;
+};
+
+export type NotionParagraphBlock = NotionBlock & {
+  paragraph: {
+    rich_text: [
+      {
+        type: 'text';
+        text: {
+          content: string;
+        };
+      },
+    ];
+  };
+};
+
+export enum BlockType {
+  paragraph = 'paragraph',
+}
 
 // My Types
 export type NewPage = {

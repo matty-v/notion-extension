@@ -353,7 +353,7 @@ export const TEST_NOTION_PAGES: NotionPageObject[] = [
     object: 'page',
     id: 'ae949d8f-3324-4efd-8762-d03ff64dc617',
     created_time: '2023-06-18T16:26:00.000Z',
-    last_edited_time: '2023-06-18T16:27:00.000Z',
+    last_edited_time: '2023-06-29T11:22:00.000Z',
     created_by: {
       object: 'user',
       id: 'eed04b94-181c-4f78-b1fe-8dffe391114b',
@@ -382,37 +382,103 @@ export const TEST_NOTION_PAGES: NotionPageObject[] = [
       'Multi-select': {
         id: 'GyIL',
         type: 'multi_select',
-        multi_select: [],
+        multi_select: [
+          {
+            id: 'HPWI',
+            name: 'Multi Option 1',
+            color: 'purple',
+          },
+          {
+            id: '?CKO',
+            name: 'Multi Option 2',
+            color: 'pink',
+          },
+        ],
       },
-      Tags: {
-        id: 'QTsz',
-        type: 'multi_select',
-        multi_select: [],
+      Phone: {
+        id: 'JA%60U',
+        type: 'phone_number',
+        phone_number: '719-867-5309',
+      },
+      Person: {
+        id: 'Vz%3B%40',
+        type: 'people',
+        people: [
+          {
+            object: 'user',
+            id: 'eed04b94-181c-4f78-b1fe-8dffe391114b',
+          },
+        ],
+      },
+      'Files & media': {
+        id: 'Xz%7D%40',
+        type: 'files',
+        files: [
+          {
+            name: 'PXL_20220815_225743741.jpeg',
+            type: 'file',
+            file: {
+              url: 'https://s3.us-west-2.amazonaws.com/secure.notion-static.com/81740ae3-b65e-4ed1-ae57-0aa43131bd6d/PXL_20220815_225743741.jpeg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20230629%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20230629T112231Z&X-Amz-Expires=3600&X-Amz-Signature=4b0ecd910143b1dddd360b613ed8d3c87c57d496ea5cd2b2ddf50533729151f0&X-Amz-SignedHeaders=host&x-id=GetObject',
+              expiry_time: '2023-06-29T12:22:31.901Z',
+            },
+          },
+        ],
       },
       URL: {
         id: '%5CG%5Ef',
         type: 'url',
-        url: null,
+        url: 'www.google.com',
       },
       Number: {
         id: '%5EJrw',
         type: 'number',
-        number: null,
+        number: 3,
       },
       Date: {
         id: 'bYlu',
         type: 'date',
-        date: null,
+        date: {
+          start: '2023-06-28',
+          end: null,
+          time_zone: null,
+        },
       },
       Text: {
         id: 'mDD%3E',
         type: 'rich_text',
-        rich_text: [],
+        rich_text: [
+          {
+            type: 'text',
+            text: {
+              content: 'Heyo',
+              link: null,
+            },
+            annotations: {
+              bold: false,
+              italic: false,
+              strikethrough: false,
+              underline: false,
+              code: false,
+              color: 'default',
+            },
+            plain_text: 'Heyo',
+            href: null,
+          },
+        ],
       },
       Select: {
         id: 'veqE',
         type: 'select',
-        select: undefined,
+        select: {
+          id: 'we^U',
+          name: 'Option 1',
+          color: 'green',
+        },
+      },
+      Checkbox: {
+        id: 'w~mE',
+        type: 'checkbox',
+        checkbox: true,
       },
       Name: {
         id: 'title',
@@ -439,7 +505,6 @@ export const TEST_NOTION_PAGES: NotionPageObject[] = [
       },
     },
     url: 'https://www.notion.so/Test-DB-Page-ae949d8f33244efd8762d03ff64dc617',
-    public_url: null,
   } as NotionPageObject,
   {
     object: 'page',
@@ -1205,7 +1270,7 @@ export const TEST_NOTION_DATABASES: NotionDatabaseObject[] = [
       object: 'user',
       id: 'eed04b94-181c-4f78-b1fe-8dffe391114b',
     },
-    last_edited_time: '2023-06-18T16:38:00.000Z',
+    last_edited_time: '2023-06-29T11:21:00.000Z',
     title: [
       {
         type: 'text',
@@ -1296,6 +1361,24 @@ export const TEST_NOTION_DATABASES: NotionDatabaseObject[] = [
           ],
         },
       },
+      Phone: {
+        id: 'JA%60U',
+        name: 'Phone',
+        type: 'phone_number',
+        phone_number: {},
+      },
+      Person: {
+        id: 'Vz%3B%40',
+        name: 'Person',
+        type: 'people',
+        people: {},
+      },
+      'Files & media': {
+        id: 'Xz%7D%40',
+        name: 'Files & media',
+        type: 'files',
+        files: {},
+      },
       URL: {
         id: '%5CG%5Ef',
         name: 'URL',
@@ -1346,6 +1429,12 @@ export const TEST_NOTION_DATABASES: NotionDatabaseObject[] = [
           ],
         },
       },
+      Checkbox: {
+        id: 'w~mE',
+        name: 'Checkbox',
+        type: 'checkbox',
+        checkbox: {},
+      },
       Name: {
         id: 'title',
         name: 'Name',
@@ -1358,7 +1447,5 @@ export const TEST_NOTION_DATABASES: NotionDatabaseObject[] = [
       page_id: 'd1c02075-7379-4c1e-bd8a-334d56b85009',
     },
     url: 'https://www.notion.so/c671ee7a76ca47a59755de5f61ea8bcb',
-    public_url: null,
-    archived: false,
   } as NotionDatabaseObject,
 ];

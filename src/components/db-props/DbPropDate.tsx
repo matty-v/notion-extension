@@ -8,7 +8,7 @@ import { DbPropTypeProps } from './DbPropForm';
 export default function DbPropDate(props: DbPropTypeProps) {
   const { setValue, propName } = props;
 
-  const [dateValue, setDateValue] = useState<Date | null>();
+  const [dateValue, setDateValue] = useState<Date | null>(null);
 
   useEffect(() => {
     on(Events.ResetForm).subscribe(_ => setDateValue(null));

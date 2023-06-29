@@ -2,10 +2,12 @@ import axios, { AxiosInstance } from 'axios';
 import { TEST_NOTION_DATABASES, TEST_NOTION_PAGES } from '../test/test-data';
 import { NOTION_TOKEN } from './consts';
 import {
+  BlockType,
   ItemType,
   NotionDatabaseObject,
   NotionPageObject,
   NotionPageOrDatabaseObject,
+  NotionParagraphBlock,
   NotionProp,
   NotionPropertyType,
   NotionTitle,
@@ -42,45 +44,22 @@ export const createPageInParentPage = async (
 };
 
 export const createNewPage = async (parent: any, properties: any, pageContent: string): Promise<NotionPageObject> => {
-  const children = [
-    {
-      object: 'block',
-      type: 'paragraph',
-      paragraph: {
-        rich_text: [
-          {
-            type: 'text',
-            text: {
-              content: pageContent,
-            },
-          },
-        ],
-      },
-    },
-  ];
+  const paragraphBlock = formatParagraphBlock(pageContent);
+
+  const requestBody = {
+    parent,
+    properties,
+    ...(paragraphBlock && { children: [paragraphBlock] }),
+  };
 
   if (process.env.REACT_APP_OFFLINE) {
     console.log('Offline request');
-    console.log(
-      JSON.stringify(
-        {
-          parent,
-          properties,
-          children,
-        },
-        null,
-        2,
-      ),
-    );
+    console.log(JSON.stringify(requestBody, null, 2));
     await sleep(2);
 
     return {} as NotionPageObject;
   } else {
-    const response = await createNotionApiClient().post('pages', {
-      parent,
-      properties,
-      children,
-    });
+    const response = await createNotionApiClient().post('pages', requestBody);
 
     console.log(JSON.stringify(response.data, null, 2));
 
@@ -90,41 +69,20 @@ export const createNewPage = async (parent: any, properties: any, pageContent: s
 
 // TBD - Add Notion block to types
 export const addToPage = async (pageId: string, content: string): Promise<any> => {
-  const children = [
-    {
-      object: 'block',
-      type: 'paragraph',
-      paragraph: {
-        rich_text: [
-          {
-            type: 'text',
-            text: {
-              content,
-            },
-          },
-        ],
-      },
-    },
-  ];
+  if (!content) return Promise.resolve();
+  const paragraphBlock = formatParagraphBlock(content);
+  const requestBody = {
+    ...(paragraphBlock && { children: [paragraphBlock] }),
+  };
 
   if (process.env.REACT_APP_OFFLINE) {
     console.log('Offline request');
-    console.log(
-      JSON.stringify(
-        {
-          children,
-        },
-        null,
-        2,
-      ),
-    );
+    console.log(JSON.stringify(requestBody, null, 2));
     await sleep(2);
 
     return {};
   } else {
-    const response = await createNotionApiClient().patch(`blocks/${pageId}/children`, {
-      children,
-    });
+    const response = await createNotionApiClient().patch(`blocks/${pageId}/children`, requestBody);
 
     console.log(JSON.stringify(response.data, null, 2));
 
@@ -257,6 +215,22 @@ export const formatPropValues = (
 
         break;
 
+      case NotionPropertyType.status:
+        propertiesWithValues[prop.propName] = {
+          status: {
+            name: prop.propValue,
+          },
+        };
+
+        break;
+
+      case NotionPropertyType.checkbox:
+        propertiesWithValues[prop.propName] = {
+          checkbox: prop.propValue === 'true' ? true : false,
+        };
+
+        break;
+
       case NotionPropertyType.date:
         propertiesWithValues[prop.propName] = {
           date: {
@@ -283,6 +257,25 @@ export const parseFromLocalStorage = (storageKey: string): any | null => {
   } else {
     return null;
   }
+};
+
+const formatParagraphBlock = (content: string): NotionParagraphBlock | null => {
+  if (!content) return null;
+
+  return {
+    object: 'block',
+    type: BlockType.paragraph,
+    paragraph: {
+      rich_text: [
+        {
+          type: 'text',
+          text: {
+            content,
+          },
+        },
+      ],
+    },
+  };
 };
 
 const getPageName = (page: NotionPageObject): string => {
