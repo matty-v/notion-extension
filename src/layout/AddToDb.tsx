@@ -32,6 +32,7 @@ export default function AddToDb(props: AddToDbProps) {
     const selectedDatabase = selectedItem as NotionDatabaseObject;
     setSelectedDb(selectedDatabase);
     localStorage.setItem(SELECTED_DB, JSON.stringify(selectedDatabase));
+    setDbPropValues([]);
   };
 
   const handleCreatePage = async (): Promise<void> => {
@@ -78,7 +79,14 @@ export default function AddToDb(props: AddToDbProps) {
         propType: propType,
       });
     } else {
-      prop.propValue = propValue;
+      if (!propValue || (propType === NotionPropertyType.checkbox && propValue === 'false')) {
+        newPropValues.splice(
+          newPropValues.findIndex(prop => prop.propName === propName),
+          1,
+        );
+      } else {
+        prop.propValue = propValue;
+      }
     }
     setDbPropValues(newPropValues);
     console.log(JSON.stringify(newPropValues));
@@ -88,7 +96,11 @@ export default function AddToDb(props: AddToDbProps) {
     <Container>
       <ItemSelector selectorType="database" item={selectedDb} setItem={handleSelectDb} itemType={ItemType.database} />
       <AddPageForm setNewPage={setNewPage} newPage={newPage} />
-      {selectedDb ? <DbPropForm dbProps={selectedDb?.properties} setPropValue={setPropValue} /> : <></>}
+      {selectedDb ? (
+        <DbPropForm dbProps={selectedDb?.properties} setPropValue={setPropValue} propValues={dbPropValues} />
+      ) : (
+        <></>
+      )}
       <Button variant="contained" onClick={handleCreatePage} sx={{ mt: 1 }}>
         Create Database Page
       </Button>

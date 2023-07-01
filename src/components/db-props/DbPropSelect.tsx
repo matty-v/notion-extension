@@ -4,8 +4,8 @@ import { Events, on } from '../../utils/broadcaster';
 import { DbPropTypeProps } from './DbPropForm';
 
 export default function DbPropSelect(props: DbPropTypeProps) {
-  const { setValue, propName, selectOptions } = props;
-  const [selectValue, setSelectValue] = useState('');
+  const { value, setValue, propName, selectOptions } = props;
+  const [selectValue, setSelectValue] = useState(value ?? '');
 
   useEffect(() => {
     on(Events.ResetForm).subscribe(_ => setSelectValue(''));

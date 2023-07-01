@@ -4,8 +4,8 @@ import { Events, on } from '../../utils/broadcaster';
 import { DbPropTypeProps } from './DbPropForm';
 
 export default function DbPropMultiSelect(props: DbPropTypeProps) {
-  const { setValue, propName, selectOptions } = props;
-  const [selectValues, setSelectValues] = useState<string[]>([]);
+  const { value, setValue, propName, selectOptions } = props;
+  const [selectValues, setSelectValues] = useState<string[]>(value ? value.split(',') : []);
 
   useEffect(() => {
     on(Events.ResetForm).subscribe(_ => setSelectValues([]));

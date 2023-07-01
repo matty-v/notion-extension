@@ -4,8 +4,8 @@ import { Events, on } from '../../utils/broadcaster';
 import { DbPropTypeProps } from './DbPropForm';
 
 export default function DbPropUrl(props: DbPropTypeProps) {
-  const { setValue, propName } = props;
-  const [urlValue, setUrlValue] = useState('');
+  const { value, setValue, propName } = props;
+  const [urlValue, setUrlValue] = useState(value ?? '');
 
   useEffect(() => {
     on(Events.ResetForm).subscribe(_ => setUrlValue(''));

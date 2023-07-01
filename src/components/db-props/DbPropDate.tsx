@@ -6,9 +6,11 @@ import { Events, on } from '../../utils/broadcaster';
 import { DbPropTypeProps } from './DbPropForm';
 
 export default function DbPropDate(props: DbPropTypeProps) {
-  const { setValue, propName } = props;
+  const { value, setValue, propName } = props;
 
-  const [dateValue, setDateValue] = useState<Date | null>(null);
+  const [dateValue, setDateValue] = useState<Date | null>(
+    value ? new Date(new Date(value).getTime() + new Date(value).getTimezoneOffset() * 60 * 1000) : null,
+  );
 
   useEffect(() => {
     on(Events.ResetForm).subscribe(_ => setDateValue(null));

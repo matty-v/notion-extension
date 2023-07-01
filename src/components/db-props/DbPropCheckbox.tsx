@@ -4,8 +4,8 @@ import { Events, on } from '../../utils/broadcaster';
 import { DbPropTypeProps } from './DbPropForm';
 
 export default function DbPropCheckbox(props: DbPropTypeProps) {
-  const { setValue, propName } = props;
-  const [checkboxValue, setCheckboxValue] = useState(false);
+  const { value, setValue, propName } = props;
+  const [checkboxValue, setCheckboxValue] = useState(value === 'true' ? true : false);
 
   useEffect(() => {
     on(Events.ResetForm).subscribe(_ => setCheckboxValue(false));

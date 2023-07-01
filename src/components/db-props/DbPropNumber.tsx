@@ -4,8 +4,8 @@ import { Events, on } from '../../utils/broadcaster';
 import { DbPropTypeProps } from './DbPropForm';
 
 export default function DbPropNumber(props: DbPropTypeProps) {
-  const { setValue, propName } = props;
-  const [numberValue, setNumberValue] = useState('');
+  const { value, setValue, propName } = props;
+  const [numberValue, setNumberValue] = useState(value ?? '');
 
   useEffect(() => {
     on(Events.ResetForm).subscribe(_ => setNumberValue(''));

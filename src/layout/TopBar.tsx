@@ -25,12 +25,18 @@ export default function TopBar() {
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static">
           <Toolbar variant="dense">
-            <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }} onClick={handleMenuClick}>
-              <MenuIcon />
-            </IconButton>
-            <Typography variant="h6" color="inherit" component="div">
+            <img
+              alt="Notion Helper"
+              src="https://upload.wikimedia.org/wikipedia/commons/4/45/Notion_app_logo.png"
+              style={{ height: '20px', width: 'auto' }}
+            />
+            <Typography variant="h6" color="inherit" component="div" sx={{ ml: 2 }}>
               Notion Helper
             </Typography>
+            <div style={{ flexGrow: 1 }}></div>
+            <IconButton edge="start" color="inherit" aria-label="menu" onClick={handleMenuClick}>
+              <MenuIcon />
+            </IconButton>
           </Toolbar>
         </AppBar>
       </Box>

@@ -4,8 +4,8 @@ import { Events, on } from '../../utils/broadcaster';
 import { DbPropTypeProps } from './DbPropForm';
 
 export default function DbPropRichText(props: DbPropTypeProps) {
-  const { setValue, propName } = props;
-  const [textValue, setTextValue] = useState('');
+  const { value, setValue, propName } = props;
+  const [textValue, setTextValue] = useState(value ?? '');
 
   useEffect(() => {
     on(Events.ResetForm).subscribe(_ => setTextValue(''));
